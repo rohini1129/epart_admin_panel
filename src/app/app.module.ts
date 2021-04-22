@@ -29,6 +29,18 @@ import { NavigationComponent } from './user-pages/navigation/navigation.componen
 import { HomeComponent } from './user-pages/home/home.component';
 import { FooterComponent } from './user-pages/footer/footer.component';
 import { ProductListComponent } from './user-pages/product-list/product-list.component';
+import { SubscriptionPlansComponent } from './admin-pages/subscription-plans/subscription-plans.component';
+import { StatusComponent } from './admin-pages/status/status.component';
+import { CountryComponent } from './admin-pages/country/country.component';
+import { StateComponent } from './admin-pages/state/state.component';
+import { CityComponent } from './admin-pages/city/city.component';
+import { ProductTypeComponent } from './admin-pages/product-type/product-type.component';
+import { TradingTypeComponent } from './admin-pages/trading-type/trading-type.component';
+import { ReasonComponent } from './admin-pages/reason/reason.component';
+import { CurrencyComponent } from './admin-pages/currency/currency.component';
+import { RoleComponent } from './admin-pages/role/role.component';
+import { UserTypeComponent } from './admin-pages/user-type/user-type.component';
+import { PayoutScheduleComponent } from './admin-pages/payout-schedule/payout-schedule.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +59,18 @@ import { ProductListComponent } from './user-pages/product-list/product-list.com
     HomeComponent,
     FooterComponent,
     ProductListComponent,
+    SubscriptionPlansComponent,
+    StatusComponent,
+    CountryComponent,
+    StateComponent,
+    CityComponent,
+    ProductTypeComponent,
+    TradingTypeComponent,
+    ReasonComponent,
+    CurrencyComponent,
+    RoleComponent,
+    UserTypeComponent,
+    PayoutScheduleComponent
   ],
   imports: [
     BrowserModule,

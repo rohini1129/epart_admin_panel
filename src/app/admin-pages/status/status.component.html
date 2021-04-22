@@ -1,0 +1,99 @@
+<div class="mt-1">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/admin/status']" routerLinkActive="router-link-active">Status</a></li>
+          <li *ngIf="addmode" class="breadcrumb-item active" aria-current="page">ADD</li>
+          <li *ngIf="editmode" class="breadcrumb-item active" aria-current="page">EDIT</li>
+        </ol>
+    </nav>
+  </div>
+  
+  <div class="mt-1 d-flex justify-content-end">
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addStatus">New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editStatus()">Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+  </div>
+  
+  <div>
+    <h3>Status List</h3>
+  </div>
+  
+  <div class="mt-1">
+    <ag-grid-angular
+    #agGrid
+        style="width: auto; height: 750px;"
+        class="ag-theme-alpine"
+        [rowHeight]="'50'"
+        [rowData]="statusList"
+        [columnDefs]="StatuscolumnDefs"
+        [pagination]="true">
+    </ag-grid-angular>
+  </div>
+
+
+  <div class="modal fade" id="addStatus" tabindex="-1" aria-labelledby="addStatusLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addStatusLabel">New Status Form</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="mt-1">
+                <form [formGroup]="StatusForm">
+                    <div class="form-row mt-2">
+                        <div class="form-group col-12">
+                            <label for="exampleFormControlInput1">Status ID</label>
+                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" disabled>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="exampleFormControlInput1">Status Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Status Name" formControlName="status_name">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="exampleFormControlSelect1">Status</label>
+                            <select class="form-control" formControlName="status">
+                              <option value="">Choose</option>
+                              <option value="active">Active</option>
+                              <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="d-flex justify-content-end">
+                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addStatus()" data-dismiss="modal">Add</button>
+                <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateStatus()" data-dismiss="modal">Update</button>
+                <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="deleteStatus" tabindex="-1" aria-labelledby="deleteStatusLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteStatusLabel">Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Do you really want to delete this Status ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" (click)="deleteStatus()" data-dismiss="modal">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
