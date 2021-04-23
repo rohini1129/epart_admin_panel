@@ -23,9 +23,7 @@ export class TradingTypeComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private TradingTypeService:TrandingTypeService,
               private toastr:ToastrManager) { 
     this.TradingTypeForm = this.formBuilder.group({
-      id:['', Validators.required],
-      TradingType_name:['', Validators.required],
-      status:['', Validators.required]
+      TradingType_name:['', Validators.required]
     });
   }
 
@@ -66,9 +64,7 @@ export class TradingTypeComponent implements OnInit {
       this.editmode = true;
       $('#addTranding_Type').modal('show');
       this.TradingTypeForm.patchValue({
-        id:selectedData[0].id,
-        Tranding_Type_name:selectedData[0].Tranding_Type_name,
-        status:selectedData[0].status,
+        Tranding_Type_name:selectedData[0].Tranding_Type_name
       });
     } else {
       this.showError("Select only One record");

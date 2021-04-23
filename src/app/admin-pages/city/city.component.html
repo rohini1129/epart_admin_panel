@@ -19,17 +19,29 @@
     <h3>City List</h3>
   </div>
   
-  <div class="mt-1">
-    <ag-grid-angular
-    #agGrid
-        style="width: auto; height: 750px;"
-        class="ag-theme-alpine"
-        [rowHeight]="'50'"
-        [rowData]="cityList"
-        [columnDefs]="CitycolumnDefs"
-        [pagination]="true">
-    </ag-grid-angular>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Generated Code</th>
+        <th scope="col">State Name</th>
+        <th scope="col">Delete Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
 
 
   <div class="modal fade" id="addCity" tabindex="-1" aria-labelledby="addCityLabel" aria-hidden="true">
@@ -45,22 +57,13 @@
             <div class="mt-1">
                 <form [formGroup]="CityForm">
                     <div class="form-row mt-2">
-                        <div class="form-group col-12">
-                            <label for="exampleFormControlInput1">City ID</label>
-                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" disabled>
+                      <div class="form-group col">
+                        <label>City</label>
+                        <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                            <div *ngIf="f.city.errors.required">Add Name is required</div>
                         </div>
-                        <div class="form-group col-4">
-                            <label for="exampleFormControlInput1">City Name</label>
-                            <input type="text" class="form-control" placeholder="Enter City Name" formControlName="city_name">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="exampleFormControlSelect1">Status</label>
-                            <select class="form-control" formControlName="status">
-                              <option value="">Choose</option>
-                              <option value="active">Active</option>
-                              <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
+                    </div>
                         
                     </div>
                 </form>

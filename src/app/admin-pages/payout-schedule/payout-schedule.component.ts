@@ -39,9 +39,8 @@ export class PayoutScheduleComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private Payout_ScheduleService:Payout_ScheduleService,
               private toastr:ToastrManager) { 
     this.Payout_ScheduleForm = this.formBuilder.group({
-      id:['', Validators.required],
       Payout_Schedule_name:['', Validators.required],
-      status:['', Validators.required]
+      
     });
   }
 

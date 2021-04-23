@@ -41,9 +41,7 @@ export class SubscriptionPlansComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private  Subscription_PlansService: SubscriptionPlansService,
               private toastr:ToastrManager) { 
     this. SubscriptionPlansForm = this.formBuilder.group({
-      id:['', Validators.required],
-       Subscription_Plans_name:['', Validators.required],
-      status:['', Validators.required]
+       Subscription_Plans_name:['', Validators.required]
     });
   }
 
@@ -85,9 +83,7 @@ export class SubscriptionPlansComponent implements OnInit {
       this.editmode = true;
       $('#add Subscription_Plans').modal('show');
       this.SubscriptionPlansForm.patchValue({
-        id:selectedData[0].id,
-         Subscription_Plans_name:selectedData[0]. Subscription_Plans_name,
-        status:selectedData[0].status,
+         Subscription_Plans_name:selectedData[0]. Subscription_Plans_name
       });
     } else {
       this.showError("Select only One record");

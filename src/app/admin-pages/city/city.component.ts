@@ -39,9 +39,7 @@ export class CityComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private CityService:CityService,
               private toastr:ToastrManager) { 
     this.CityForm = this.formBuilder.group({
-      id:['', Validators.required],
-      city_name:['', Validators.required],
-      status:['', Validators.required]
+      city_name:['', Validators.required,Validators.maxLength(6)],
     });
   }
 

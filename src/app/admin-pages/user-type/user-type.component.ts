@@ -39,9 +39,7 @@ export class UserTypeComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private UserTypeService:UserTypeService,
               private toastr:ToastrManager) { 
     this.UserTypeForm = this.formBuilder.group({
-      id:['', Validators.required],
-      UserType_name:['', Validators.required],
-      status:['', Validators.required]
+        UserType_name:['', Validators.required]
     });
   }
 
@@ -83,9 +81,7 @@ export class UserTypeComponent implements OnInit {
       this.editmode = true;
       $('#addUserType').modal('show');
       this.UserTypeForm.patchValue({
-        id:selectedData[0].id,
-        UserType_name:selectedData[0].UserType_name,
-        status:selectedData[0].status,
+        UserType_name:selectedData[0].UserType_name
       });
     } else {
       this.showError("Select only One record");

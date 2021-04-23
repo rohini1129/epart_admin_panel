@@ -18,25 +18,36 @@
   <div>
     <h3>State List</h3>
   </div>
-  
-  <div class="mt-1">
-    <ag-grid-angular
-    #agGrid
-        style="width: auto; height: 750px;"
-        class="ag-theme-alpine"
-        [rowHeight]="'50'"
-        [rowData]="stateList"
-        [columnDefs]="StatecolumnDefs"
-        [pagination]="true">
-    </ag-grid-angular>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Generated Code</th>
+        <th scope="col">State Name</th>
+        <th scope="col">Delete Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
 
 
   <div class="modal fade" id="addState" tabindex="-1" aria-labelledby="addStateLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addStateLabel">New State Form</h5>
+          <h5 class="modal-State" id="addStateLabel">New State Form</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -44,23 +55,20 @@
         <div class="modal-body">
             <div class="mt-1">
                 <form [formGroup]="StateForm">
-                    <div class="form-row mt-2">
-                        <div class="form-group col-12">
-                            <label for="exampleFormControlInput1">State ID</label>
-                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" disabled>
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="exampleFormControlInput1">State Name</label>
-                            <input type="text" class="form-control" placeholder="Enter State Name" formControlName="state_name">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="exampleFormControlSelect1">Status</label>
-                            <select class="form-control" formControlName="status">
-                              <option value="">Choose</option>
-                              <option value="active">Active</option>
-                              <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
+                    <div class="form-row mt-2">    
+                    <div class="form-group col-12">
+                      <label>State</label>
+                      <select formControlName="State_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.State.errors }">
+                          <option value=""> !.....Select The State....1</option>
+                          <option value="Mr">Mr</option>
+                          <option value="Mrs">Mrs</option>
+                          <option value="Miss">Miss</option>
+                          <option value="Ms">Ms</option>
+                      </select>
+                      <div *ngIf="submitted && f.State.errors" class="invalid-feedback">
+                          <div *ngIf="f.State.errors.required">State is required</div>
+                      </div>
+                  </div>
                         
                     </div>
                 </form>
@@ -81,7 +89,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="deleteStateLabel">Delete</h5>
+          <h5 class="modal-State" id="deleteStateLabel">Delete</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

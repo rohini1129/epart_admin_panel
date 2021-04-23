@@ -39,9 +39,7 @@ export class CountryComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private CountryService:CountryService,
               private toastr:ToastrManager) { 
     this.CountryForm = this.formBuilder.group({
-      id:['', Validators.required],
-      country_name:['', Validators.required],
-      status:['', Validators.required]
+      country_name:['', Validators.required]
     });
   }
 

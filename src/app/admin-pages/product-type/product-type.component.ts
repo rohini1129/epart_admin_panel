@@ -40,9 +40,7 @@ export class ProductTypeComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private Product_TypeService:ProductTypeService,
               private toastr:ToastrManager) { 
     this.Product_TypeForm = this.formBuilder.group({
-      id:['', Validators.required],
-      product_type_name:['', Validators.required],
-      status:['', Validators.required]
+      product_type_name: ['', Validators.required]
     });
   }
 

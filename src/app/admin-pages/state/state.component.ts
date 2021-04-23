@@ -39,9 +39,7 @@ export class StateComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private StateService:StateService,
               private toastr:ToastrManager) { 
     this.StateForm = this.formBuilder.group({
-      id:['', Validators.required],
-      State_name:['', Validators.required],
-      status:['', Validators.required]
+      state_name: ['', Validators.required],
     });
   }
 

@@ -18,19 +18,30 @@
   <div>
     <h3>User-Type List</h3>
   </div>
-  
-  <div class="mt-1">
-    <ag-grid-angular
-    #agGrid
-        style="width: auto; height: 750px;"
-        class="ag-theme-alpine"
-        [rowHeight]="'50'"
-        [rowData]="user-TypeList"
-        [columnDefs]="User-TypecolumnDefs"
-        [pagination]="true">
-    </ag-grid-angular>
-  </div>
 
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Generated Code</th>
+        <th scope="col">State Name</th>
+        <th scope="col">Delete Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
 
   <div class="modal fade" id="addUser-Type" tabindex="-1" aria-labelledby="addUser-TypeLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -45,22 +56,19 @@
             <div class="mt-1">
                 <form [formGroup]="User-TypeForm">
                     <div class="form-row mt-2">
-                        <div class="form-group col-12">
-                            <label for="exampleFormControlInput1">User-Type ID</label>
-                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" disabled>
+                      <div class="form-group col-12">
+                        <label>User Type</label>
+                        <select formControlName="user-type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.user-type.errors }">
+                            <option value=""> !.....Select The user....1</option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Ms">Ms</option>
+                        </select>
+                        <div *ngIf="submitted && f.user-type.errors" class="invalid-feedback">
+                            <div *ngIf="f.user-type.errors.required">User-Type is required</div>
                         </div>
-                        <div class="form-group col-4">
-                            <label for="exampleFormControlInput1">User-Type Name</label>
-                            <input type="text" class="form-control" placeholder="Enter User-Type Name" formControlName="user-Type_name">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="exampleFormControlSelect1">Status</label>
-                            <select class="form-control" formControlName="status">
-                              <option value="">Choose</option>
-                              <option value="active">Active</option>
-                              <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
+                    </div>
                         
                     </div>
                 </form>
