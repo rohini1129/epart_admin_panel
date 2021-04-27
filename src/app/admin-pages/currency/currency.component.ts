@@ -12,6 +12,11 @@ declare var $:any;
 })
 export class CurrencyComponent implements OnInit {
   @ViewChild('agGrid') agGrid: AgGridAngular;
+  
+ registerForm: FormGroup;
+ submitted = false;
+
+
   CurrencycolumnDefs = [
     {headerName: 'UID', field: 'uid', width: 150, checkboxSelection: true,headerCheckboxSelection: true,sortable: true, filter: true},
     {headerName: 'Logo', field: 'logo', width: 120,cellRenderer: function(params) {
@@ -40,13 +45,17 @@ export class CurrencyComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private CurrencyService:CurrencyService,
               private toastr:ToastrManager) { 
     this.CurrencyForm = this.formBuilder.group({
-      id:['', Validators.required],
-      Currency_name:['', Validators.required],
-      status:['', Validators.required]
+      Currency_name:['', Validators.required]
+      
     });
   }
 
   ngOnInit(): void {
+
+    this.registerForm = this.formBuilder.group({
+      title: ['', Validators.required],
+  });
+
     this.addmode = true;
     this.editmode = false;
     this.CurrencyService.listCurrency().subscribe(data=>{
@@ -59,6 +68,25 @@ export class CurrencyComponent implements OnInit {
       }
     });
   }
+  get f() { return this.registerForm.controls; }
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    this.addCurrency();
+}
+
+
+onReset() {
+  this.submitted = false;
+  this.registerForm.reset();
+}
 
 
   addCurrency(){
@@ -66,14 +94,19 @@ export class CurrencyComponent implements OnInit {
       created:new Date(),
       status:'active'
     });
-    this.CurrencyService.addCurrency(this.CurrencyForm.value).subscribe(data=>{
-      if (data['success']) {
-        this.recall();
-        this.showSuccess(data['message']);
-      } else {
-        this.showError(data['message']);
-      }
-    });
+    if(this.CurrencyForm.valid){
+      this.CurrencyService.addCurrency(this.CurrencyForm.value).subscribe(data=>{
+        if (data['success']) {
+          this.recall();
+          this.showSuccess(data['message']);
+        } else {
+          this.showError(data['message']);
+        }
+      });
+    }
+    else{
+      this.showError("Please Fill All Details")
+    }
   }
 
   editCurrency(){

@@ -10,38 +10,41 @@
   </div>
   
   <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addCountry">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editCountry()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addCountry"><i class="fas fa-plus"></i>New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editCountry()"><i class="far fa-edit"></i> Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"><i class="far fa-trash-alt"></i>Delete</button>
   </div>
   
-  <div>
-    <h3>Country List</h3>
-  </div>
+ 
   
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-
-    </tbody>
-  </table>
+<div class="card">
+  <div style="padding: 10px;">
+    <div>
+      <h3>Country List</h3>
+    </div>
+    <table class="table table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Country Name</th>
+          <th scope="col">Generated Code</th>
+          <th scope="col">Delete Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Canada</td>
+          <td>20196</td>
+          <td>Null</td>
+          <td>Yes</td>
+        </tr>
+  
+      </tbody>
+    </table>
+  </div>
+</div>
 
   <div class="modal fade" id="addCountry" tabindex="-1" aria-labelledby="addCountryLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -52,28 +55,20 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-            <div class="mt-1">
-                <form [formGroup]="CountryForm">
-                  <div class="form-group col-12">
-                    <label>Country</label>
-                    <select formControlName="country_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-                        <option value="">Select Country</option>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Miss">Miss</option>
-                        <option value="Ms">Ms</option>
-                    </select>
-                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-                        <div *ngIf="f.title.errors.required">Title is required</div>
-                    </div>
-                </div>
-                </form>
+        <form [formGroup]="CountryForm">
+        <div class="form-group col-12">
+          <label>Country</label>
+          <input type="text" class="form-control" placeholder="Enter Subscription Plans Name" formControlName="country_name">
+          <div *ngIf="CountryForm.controls['country_name'].touched && CountryForm.controls['country_name'].invalid" class="text-danger">
+            <div *ngIf="CountryForm.controls['country_name'].errors && CountryForm.controls['country_name'].errors.required"> 
+              Country Name is required.
             </div>
-        </div>
+          </div>
+      </div>
+        </form>
         <div class="modal-footer">
             <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addCountry()" data-dismiss="modal">Add</button>
+                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addCountry()">Add</button>
                 <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateCountry()" data-dismiss="modal">Update</button>
                 <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
             </div>

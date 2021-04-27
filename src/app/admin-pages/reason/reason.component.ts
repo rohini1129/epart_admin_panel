@@ -10,8 +10,12 @@ declare var $:any;
   styleUrls: ['./reason.component.scss']
 })
 export class ReasonComponent implements OnInit {
-
   @ViewChild('agGrid') agGrid: AgGridAngular;
+
+ registerForm: FormGroup;
+ submitted = false;
+
+
   ReasoncolumnDefs = [
     {headerName: 'UID', field: 'uid', width: 150, checkboxSelection: true,headerCheckboxSelection: true,sortable: true, filter: true},
     {headerName: 'Logo', field: 'logo', width: 120,cellRenderer: function(params) {
@@ -40,12 +44,15 @@ export class ReasonComponent implements OnInit {
               private toastr:ToastrManager) { 
     this.ReasonForm = this.formBuilder.group({
       id:['', Validators.required],
-      Reason_name:['', Validators.required],
+      reason_name:['', Validators.required],
       status:['', Validators.required]
     });
   }
 
   ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+        title: ['', Validators.required],
+    });
     this.addmode = true;
     this.editmode = false;
     this.ReasonService.listReason().subscribe(data=>{
@@ -60,19 +67,46 @@ export class ReasonComponent implements OnInit {
   }
 
 
+  get f() { return this.registerForm.controls; }
+
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    this.addReason();
+}
+
+
+onReset() {
+  this.submitted = false;
+  this.registerForm.reset();
+}
+
+
   addReason(){
     this.ReasonForm.patchValue({
-      created:new Date(),
-      status:'active'
+      id:new Date()
     });
-    this.ReasonService.addReason(this.ReasonForm.value).subscribe(data=>{
-      if (data['success']) {
-        this.recall();
-        this.showSuccess(data['message']);
-      } else {
-        this.showError(data['message']);
-      }
-    });
+    if(this.ReasonForm.valid){
+      
+      this.ReasonService.addReason(this.ReasonForm.value).subscribe(data=>{
+        if (data['success']) {
+          this.recall();
+          this.showSuccess(data['message']);
+        } else {
+          this.showError(data['message']);
+        }
+      });
+    }else{
+      this.showError("Please Fill all details");
+    }
   }
 
   editReason(){

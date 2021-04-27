@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</a></li>
-          <li class="breadcrumb-item"><a [routerLink]="['/admin/product-type']" routerLinkActive="router-link-active">Product-Type</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/admin/product_type']" routerLinkActive="router-link-active">Product-Type</a></li>
           <li *ngIf="addmode" class="breadcrumb-item active" aria-current="page">ADD</li>
           <li *ngIf="editmode" class="breadcrumb-item active" aria-current="page">EDIT</li>
         </ol>
@@ -10,66 +10,77 @@
   </div>
   
   <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addProduct-Type">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editProduct-Type()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addProduct-Type"><i class="fas fa-plus"></i>New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editProduct_type()"><i class="far fa-edit"></i>Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"><i class="far fa-trash-alt"></i>Delete</button>
   </div>
   
-  <div>
-    <h3>Product-Type List</h3>
+  <div class="card mt-1">
+    <div style="padding: 10px;">
+      <div>
+        <h3>Product-Type List</h3>
+      </div>
+      
+      <table class="table table-bordered table-sm">
+        <thead  class="thead-dark">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Generated Code</th>
+            <th scope="col">State Name</th>
+            <th scope="col">Delete Status</th>
+            <th scope="col">Edit</th>
+            <th scope="col">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+    
+        </tbody>
+      </table>
+   
+    </div>
   </div>
   
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+  
 
-    </tbody>
-  </table>
-
-
-  <div class="modal fade" id="addProduct-Type" tabindex="-1" aria-labelledby="addProduct-TypeLabel" aria-hidden="true">
+  <div class="modal fade" id="addProduct-Type" tabindex="-1" aria-labelledby="addProduct_TypeLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addProduct-TypeLabel">New Product-Type Form</h5>
+          <h5 class="modal-title" id="addProduct_typeLabel">New Product-Type Form</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <form [formGroup]="Product_TypeForm" (ngSubmit)="onSubmit()">
         <div class="form-group col-12">
           <label>Product-Type</label>
-          <select formControlName="product-type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+          <select formControlName="product_type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
               <option value="">Select Product</option>
               <option value="Mr">Mr</option>
               <option value="Mrs">Mrs</option>
               <option value="Miss">Miss</option>
               <option value="Ms">Ms</option>
           </select>
-          <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-              <div *ngIf="f.title.errors.required">Title is required</div>
+          <div *ngIf="Product_TypeForm.controls['product_type_name'].touched && Product_TypeForm.controls['product_type_name'].invalid" class="text-danger">
+            <div *ngIf="Product_TypeForm.controls['product_type_name'].errors && Product_TypeForm.controls['product_type_name'].errors.required"> 
+              Product Type Name is required.
+            </div>
           </div>
       </div>
+      </form>
+
         <div class="modal-footer">
             <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addProduct-Type()" data-dismiss="modal">Add</button>
-                <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateProduct-Type()" data-dismiss="modal">Update</button>
+                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addProduct_type()" data-dismiss="modal">Add</button>
+                <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateProduct_type()" data-dismiss="modal">Update</button>
                 <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -77,11 +88,11 @@
     </div>
   </div>
   
-  <div class="modal fade" id="deleteProductProduct-Type" tabindex="-1" aria-labelledby="deleteProductProduct-TypeLabel" aria-hidden="true">
+  <div class="modal fade" id="deleteProductProduct-Type" tabindex="-1" aria-labelledby="deleteProduct_typeLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="deleteProductProduct-TypeLabel">Delete</h5>
+          <h5 class="modal-title" id="deleteProduct_typeLabel">Delete</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -91,7 +102,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-danger" (click)="deleteProductProduct-Type()" data-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-danger" (click)="deleteProduct_type()" data-dismiss="modal">Yes</button>
         </div>
       </div>
     </div>

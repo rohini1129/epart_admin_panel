@@ -5,21 +5,24 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root'
 })
 export class SubscriptionPlansService {
-  listSubscription_Plans() {
-    throw new Error('Method not implemented.');
-  }
-  listSubscriptionPlans() {
-    throw new Error('Method not implemented.');
-  }
-  updateSubscription_Plans(value: any) {
-    throw new Error('Method not implemented.');
-  }
-  deleteSubscriptionPlans(uid: any) {
-    throw new Error('Method not implemented.');
-  }
+
   list: any;
 
   constructor(private http:HttpClient) { }
+
+
+  listSubscription_Plans() {
+    return this.http.get(environment.baseurl + 'subscription-plans/getlist');
+  }
+  listSubscriptionPlans() {
+    return this.http.get(environment.baseurl + 'subscription-plans/getlist');
+  }
+  updateSubscription_Plans(data: any) {
+    return this.http.post(environment.baseurl + 'subscription-plans/create',data);
+  }
+  deleteSubscriptionPlans(data: any) {
+    return this.http.post(environment.baseurl + 'subscription-plans/create',data);
+  }
 
   addSubscription_Plan(data){
     return this.http.post(environment.baseurl + 'subscription-plans/create',data);

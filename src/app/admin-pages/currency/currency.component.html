@@ -1,106 +1,121 @@
 <div class="mt-1">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</a></li>
-          <li class="breadcrumb-item"><a [routerLink]="['/admin/currency']" routerLinkActive="router-link-active">Currency</a></li>
-          <li *ngIf="addmode" class="breadcrumb-item active" aria-current="page">ADD</li>
-          <li *ngIf="editmode" class="breadcrumb-item active" aria-current="page">EDIT</li>
-        </ol>
-    </nav>
-  </div>
-  
-  <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addCurrency">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editCurrency()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
-  </div>
-  
-  <div>
-    <h3>Currency List</h3>
-  </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/admin/currency']" routerLinkActive="router-link-active">Currency</a></li>
+        <li *ngIf="addmode" class="breadcrumb-item active" aria-current="page">ADD</li>
+        <li *ngIf="editmode" class="breadcrumb-item active" aria-current="page">EDIT</li>
+      </ol>
+  </nav>
+</div>
 
-    </tbody>
-  </table>
+<div class="mt-1 d-flex justify-content-end">
+  <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addCurrency"> <i class="fas fa-plus"></i>New</button>
+  <button type="button" class="btn btn-info btn-sm mr-1" (click)="editCurrency()"><i class="far fa-edit"></i> Edit</button>
+  <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"><i class="far fa-trash-alt"></i>Delete</button>
+</div>
+<div class="card mt-1">
+  <div style="padding: 10px;">
+    <div>
+      <h3>Currency List</h3>
+    </div>
+    
+    <table class="table table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Generated Code</th>
+          <th scope="col">Country</th>
+          <th scope="col">Symbole</th>
+          <th scope="col">Delete Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+    
+      </tbody>
+    </table>
+  </div>
+</div>
 
-  <div class="modal fade" id="addCurrency" tabindex="-1" aria-labelledby="addCurrencyLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addCurrencyLabel">New Currency Form</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+
+
+<div class="modal fade" id="addCurrency" tabindex="-1" aria-labelledby="addCurrencyLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCurrencyLabel">New Currency Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="CurrencyForm">
         <div class="modal-body">
             <div class="mt-1">
-                <form [formGroup]="CurrencyForm">
                     <div class="form-row mt-2">
-                      <div class="form-group col">
-                        <label>Currency</label>
-                        <select formControlName="currency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.currency.errors }">
-                            <option value="">!...Select the Status...!</option>
-                            <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Miss">Miss</option>
-                            <option value="Ms">Ms</option>
+                      <div class="form-group col-6">
+                        <label for="exampleFormControlSelect1">Country</label>
+                        <select class="form-control" formControlName="status">
+                          <option value="">Choose</option>
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
                         </select>
-                        <div *ngIf="submitted && f.currency.errors" class="invalid-feedback">
-                            <div *ngIf="f.currency.errors.required">Status is required</div>
+                        <div *ngIf="CurrencyForm.controls['status'].touched && CurrencyForm.controls['status'].invalid" class="text-danger">
+                          <div *ngIf="CurrencyForm.controls['status'].errors && CurrencyForm.controls['status'].errors.required"> 
+                            Currency Name is required.
+                          </div>
                         </div>
-                      </div>
-                        
                     </div>
-                </form>
-            </div>
+                        <div class="form-group col-6">
+                            <label for="exampleFormControlInput1">Symbole</label>
+                            <input type="text" class="form-control" placeholder="Enter Currency Name" formControlName="currency_name">
+                            <div *ngIf="CurrencyForm.controls['currency_name'].touched && CurrencyForm.controls['currency_name'].invalid" class="text-danger">
+                              <div *ngIf="CurrencyForm.controls['currency_name'].errors && CurrencyForm.controls['currency_name'].errors.required"> 
+                                Currency Name is required.
+                              </div>
+                            </div>
+                        </div>
+
+                    </div>
+              </div>
         </div>
-        <div class="modal-footer">
-            <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addCurrency()" data-dismiss="modal">Add</button>
-                <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateCurrency()" data-dismiss="modal">Update</button>
-                <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
+      </form>
+      <div class="modal-footer">
+          <div class="d-flex justify-content-end">
+              <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addCurrency()" >Add</button>
+              <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateCurrency()" data-dismiss="modal">Update</button>
+              <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
+          </div>
       </div>
     </div>
   </div>
-  
-  <div class="modal fade" id="deleteCurrency" tabindex="-1" aria-labelledby="deleteCurrencyLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteCurrencyLabel">Delete</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Do you really want to delete this Currency ?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-danger" (click)="deleteCurrency()" data-dismiss="modal">Yes</button>
-        </div>
+</div>
+
+<div class="modal fade" id="deleteCurrency" tabindex="-1" aria-labelledby="deleteCurrencyLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteCurrencyLabel">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete this Currency ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="deleteCurrency()" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
-  
+</div>
+

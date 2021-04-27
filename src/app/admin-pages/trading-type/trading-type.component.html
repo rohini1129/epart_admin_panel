@@ -10,39 +10,43 @@
   </div>
   
   <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addTrading-Type">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editTrading-Type()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addTrading-Type"><i class="far fa-edit"></i> New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editTranding_Type()"><i class="far fa-edit"></i> Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"><i class="far fa-trash-alt"></i>Delete</button>
   </div>
   
-  <div>
-    <h3>Trading-Type List</h3>
+  <div class="card mt-1">
+    <div style="padding: 10px;">
+      <div>
+        <h3>Trading-Type List</h3>
+      </div>
+      
+      <table class="table table-bordered table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Generated Code</th>
+            <th scope="col">State Name</th>
+            <th scope="col">Delete Status</th>
+            <th scope="col">Edit</th>
+            <th scope="col">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+    
+        </tbody>
+      </table>
+    
+    </div>
   </div>
-  
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-
-    </tbody>
-  </table>
-
 
 
   <div class="modal fade" id="addTrading-Type" tabindex="-1" aria-labelledby="addTrading-TypeLabel" aria-hidden="true">
@@ -56,23 +60,29 @@
         </div>
         <div class="modal-body">
             <div class="mt-1">
-                <form [formGroup]="Trading-TypeForm">
+                <form [formGroup]="TradingTypeForm">
                     <div class="form-row mt-2">
-                        <div class="form-group col-12">
-                            <label for="exampleFormControlInput1">Trading-Type ID</label>
-                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" disabled>
-                        </div>
                         <div class="form-group col-4">
                             <label for="exampleFormControlInput1">Trading-Type Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Trading-Type Name" formControlName="trading-type_name">
+                            <input type="text" class="form-control" placeholder="Enter Trading Type Name" formControlName="Tranding_Type_name">
+                            <div *ngIf="TradingTypeForm.controls['Tranding_Type_name'].touched && TradingTypeForm.controls['Tranding_Type_name'].invalid" class="text-danger">
+                              <div *ngIf="TradingTypeForm.controls['Tranding_Type_name'].errors && TradingTypeForm.controls['Tranding_Type_name'].errors.required"> 
+                                Trading Type Name is required.
+                              </div>
+                            </div>
                         </div>
                         <div class="form-group col-4">
-                            <label for="exampleFormControlSelect1">Status</label>
-                            <select class="form-control" formControlName="status">
+                            <label for="exampleFormControlSelect1">Trading Type</label>
+                            <select class="form-control" formControlName="trading-type">
                               <option value="">Choose</option>
                               <option value="active">Active</option>
                               <option value="inactive">Inactive</option>
                             </select>
+                            <div *ngIf="TradingTypeForm.controls['trading-type'].touched && TradingTypeForm.controls['trading-type'].invalid" class="text-danger">
+                              <div *ngIf="TradingTypeForm.controls['trading-type'].errors && TradingTypeForm.controls['trading-type'].errors.required"> 
+                                Trading Type Name is required.
+                              </div>
+                            </div>
                         </div>
                         
                     </div>
@@ -81,7 +91,7 @@
         </div>
         <div class="modal-footer">
             <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addTrading-Type()" data-dismiss="modal">Add</button>
+                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addTrading-Type()" >Add</button>
                 <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateTrading-Type()" data-dismiss="modal">Update</button>
                 <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
             </div>
@@ -90,11 +100,11 @@
     </div>
   </div>
   
-  <div class="modal fade" id="deleteTrading-Type" tabindex="-1" aria-labelledby="deleteTrading-TypeLabel" aria-hidden="true">
+  <div class="modal fade" id="deleteTradingType" tabindex="-1" aria-labelledby="deleteTradingTypeLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="deleteTrading-TypeLabel">Delete</h5>
+          <h5 class="modal-title" id="deleteTradingTypeLabel">Delete</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -104,7 +114,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-danger" (click)="deleteTrading-Type()" data-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-danger" (click)="deleteTradingType()" data-dismiss="modal">Yes</button>
         </div>
       </div>
     </div>

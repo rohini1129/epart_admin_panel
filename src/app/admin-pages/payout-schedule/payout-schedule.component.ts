@@ -12,6 +12,11 @@ declare var $:any;
 })
 export class PayoutScheduleComponent implements OnInit {
   @ViewChild('agGrid') agGrid: AgGridAngular;
+
+ registerForm: FormGroup;
+ submitted = false;
+
+
   Payout_SchedulecolumnDefs = [
     {headerName: 'UID', field: 'uid', width: 150, checkboxSelection: true,headerCheckboxSelection: true,sortable: true, filter: true},
     {headerName: 'Logo', field: 'logo', width: 120,cellRenderer: function(params) {
@@ -39,12 +44,16 @@ export class PayoutScheduleComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private Payout_ScheduleService:Payout_ScheduleService,
               private toastr:ToastrManager) { 
     this.Payout_ScheduleForm = this.formBuilder.group({
-      Payout_Schedule_name:['', Validators.required],
+      Payout_Schedule:['', Validators.required],
       
     });
   }
 
   ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+        title: ['', Validators.required],
+    });
+
     this.addmode = true;
     this.editmode = false;
     this.Payout_ScheduleService.listPayout_Schedule().subscribe(data=>{
@@ -58,20 +67,50 @@ export class PayoutScheduleComponent implements OnInit {
     });
   }
 
+  
+  get f() { return this.registerForm.controls; }
+
+  
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    this.addPayout_Schedule();
+}
+
+
+onReset() {
+  this.submitted = false;
+  this.registerForm.reset();
+}
+
+
 
   addPayout_Schedule(){
     this.Payout_ScheduleForm.patchValue({
       created:new Date(),
       status:'active'
     });
-    this.Payout_ScheduleService.addPayout_Schedule(this.Payout_ScheduleForm.value).subscribe(data=>{
-      if (data['success']) {
-        this.recall();
-        this.showSuccess(data['message']);
-      } else {
-        this.showError(data['message']);
-      }
-    });
+    if(this.Payout_ScheduleForm.valid)
+    {
+      this.Payout_ScheduleService.addPayout_Schedule(this.Payout_ScheduleForm.value).subscribe(data=>{
+        if (data['success']) {
+          this.recall();
+          this.showSuccess(data['message']);
+        } else {
+          this.showError(data['message']);
+        }
+      });
+    }
+    else{
+      this.showError("Please Fill All Details")
+    }
   }
 
   editPayout_Schedule(){
@@ -114,7 +153,7 @@ export class PayoutScheduleComponent implements OnInit {
     }
 
   }
-
+  
   deletePayout_Schedule(){
     const selectedNodes = this.agGrid.api.getSelectedNodes();
     const selectedData = selectedNodes.map(node => node.data );

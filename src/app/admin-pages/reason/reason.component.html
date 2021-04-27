@@ -10,37 +10,42 @@
   </div>
   
   <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addReason">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editReason()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addReason"><i class="fas fa-plus"></i>New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editReason()"><i class="far fa-edit"></i>Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"><i class="far fa-trash-alt"></i>Delete</button>
   </div>
   
-  <div>
-    <h3>Reason List</h3>
+  <div class="card mt-1">
+    <div style="padding: 10px;">
+      <div>
+        <h3>Reason List</h3>
+      </div>
+      <table class="table table-bordered table-sm">
+        <thead class="thead-dark">
+          <tr style="text-align: center;">
+            <th scope="col">S.No</th>
+            <th scope="col">Generated Code</th>
+            <th scope="col">State Name</th>
+            <th scope="col">Delete Status</th>
+            <th scope="col">Edit</th>
+            <th scope="col">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+    
+        </tbody>
+      </table>
+    </div>
   </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-
-    </tbody>
-  </table>
+  
 
 
   <div class="modal fade" id="addReason" tabindex="-1" aria-labelledby="addReasonLabel" aria-hidden="true">
@@ -52,17 +57,22 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+      <form [formGroup]="ReasonForm">
         <div class="modal-body">
             <div class="mt-1">
-                <form [formGroup]="ReasonForm">
                     <div class="form-row mt-2">
                         <div class="form-group col-12">
                             <label for="exampleFormControlInput1">Reason ID</label>
-                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" disabled>
+                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" >
                         </div>
                         <div class="form-group col-4">
                             <label for="exampleFormControlInput1">Reason Name</label>
                             <input type="text" class="form-control" placeholder="Enter Reason Name" formControlName="reason_name">
+                            <div *ngIf="ReasonForm.controls['reason_name'].touched && ReasonForm.controls['reason_name'].invalid" class="text-danger">
+                              <div *ngIf="ReasonForm.controls['reason_name'].errors && ReasonForm.controls['reason_name'].errors.required"> 
+                                Reason Name is required.
+                              </div>
+                            </div>
                         </div>
                         <div class="form-group col-4">
                             <label for="exampleFormControlSelect1">Status</label>
@@ -72,14 +82,13 @@
                               <option value="inactive">Inactive</option>
                             </select>
                         </div>
-                        
                     </div>
-                </form>
-            </div>
+              </div>
         </div>
+      </form>
         <div class="modal-footer">
             <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addReason()" data-dismiss="modal">Add</button>
+                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addReason()">Add</button>
                 <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateReason()" data-dismiss="modal">Update</button>
                 <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
             </div>

@@ -12,6 +12,10 @@ declare var $:any;
 })
 export class StateComponent implements OnInit {
   @ViewChild('agGrid') agGrid: AgGridAngular;
+  
+ registerForm: FormGroup;
+ submitted = false;
+
   StatecolumnDefs = [
     {headerName: 'UID', field: 'uid', width: 150, checkboxSelection: true,headerCheckboxSelection: true,sortable: true, filter: true},
     {headerName: 'Logo', field: 'logo', width: 120,cellRenderer: function(params) {
@@ -44,6 +48,10 @@ export class StateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.registerForm = this.formBuilder.group({
+      title: ['', Validators.required],
+  });
     this.addmode = true;
     this.editmode = false;
     this.StateService.listState().subscribe(data=>{
@@ -58,19 +66,48 @@ export class StateComponent implements OnInit {
   }
 
 
+  get f() { return this.registerForm.controls; }
+
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    this.addState();
+}
+
+
+onReset() {
+  this.submitted = false;
+  this.registerForm.reset();
+}
+
+
+
   addState(){
     this.StateForm.patchValue({
       created:new Date(),
       status:'active'
     });
-    this.StateService.addState(this.StateForm.value).subscribe(data=>{
-      if (data['success']) {
-        this.recall();
-        this.showSuccess(data['message']);
-      } else {
-        this.showError(data['message']);
-      }
-    });
+    if(this.StateForm.valid){
+      this.StateService.addState(this.StateForm.value).subscribe(data=>{
+        if (data['success']) {
+          this.recall();
+          this.showSuccess(data['message']);
+        } else {
+          this.showError(data['message']);
+        }
+      });
+    }
+    else{
+      this.showError("Please Fill All Details")
+    }
   }
 
   editState(){

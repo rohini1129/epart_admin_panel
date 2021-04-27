@@ -10,38 +10,45 @@
   </div>
   
   <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addCity">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editCity()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addCity"><i class="fas fa-plus"></i>New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editCity()"><i class="far fa-edit"></i>Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"> <i class="far fa-trash-alt"></i>Delete</button>
   </div>
   
-  <div>
-    <h3>City List</h3>
+  <div class="card mt-1">
+    <div style="padding: 10px;">
+      <div>
+        <h3>City List</h3>
+      </div>
+      
+      <table class="table table-bordered table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Generated Code</th>
+            <th scope="col">Country Name</th>
+            <th scope="col">State Name</th>
+            <th scope="col">City</th>
+            <th scope="col">Delete Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>251801</td>
+            <td>Switzerland</td>
+            <td>Minnesota</td>
+            <td>Switzerland</td>
+            <td>Enable</td>
+            <td><i class="far fa-edit"></i> &nbsp; <i class="far fa-trash-alt"></i></td>
+          </tr>
+    
+        </tbody>
+      </table> 
+    </div>
   </div>
   
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-
-    </tbody>
-  </table>
 
 
   <div class="modal fade" id="addCity" tabindex="-1" aria-labelledby="addCityLabel" aria-hidden="true">
@@ -53,25 +60,40 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-            <div class="mt-1">
-                <form [formGroup]="CityForm">
-                    <div class="form-row mt-2">
-                      <div class="form-group col">
-                        <label>City</label>
-                        <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
-                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                            <div *ngIf="f.city.errors.required">Add Name is required</div>
-                        </div>
-                    </div>
-                        
-                    </div>
-                </form>
-            </div>
-        </div>
+        <form [formGroup]="CityForm">
+          <div class="modal-body">
+              <div class="mt-1">
+                      <div class="form-row mt-2">
+                        <div class="form-group col-6">
+                          <label for="exampleFormControlSelect1">State</label>
+                          <select class="form-control" formControlName="status">
+                            <option value="">Choose</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                          <div *ngIf="CityForm.controls['city_name'].touched && CityForm.controls['city_name'].invalid" class="text-danger">
+                            <div *ngIf="CityForm.controls['city_name'].errors && CityForm.controls['city_name'].errors.required"> 
+                              City Name is required.
+                            </div>
+                          </div>
+                      </div>
+                          <div class="form-group col-6">
+                              <label for="exampleFormControlInput1">City Name</label>
+                              <input type="text" class="form-control" placeholder="Enter City Name" formControlName="city_name">
+                              <div *ngIf="CityForm.controls['city_name'].touched && CityForm.controls['city_name'].invalid" class="text-danger">
+                                <div *ngIf="CityForm.controls['city_name'].errors && CityForm.controls['city_name'].errors.required"> 
+                                  City Name is required.
+                                </div>
+                              </div>
+                          </div>
+
+                      </div>
+                </div>
+          </div>
+        </form>
         <div class="modal-footer">
             <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addCity()" data-dismiss="modal">Add</button>
+                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addCity()" >Add</button>
                 <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateCity()" data-dismiss="modal">Update</button>
                 <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
             </div>

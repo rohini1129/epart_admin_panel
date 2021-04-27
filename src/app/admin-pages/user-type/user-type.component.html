@@ -1,107 +1,107 @@
 <div class="mt-1">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</a></li>
-          <li class="breadcrumb-item"><a [routerLink]="['/admin/user-type']" routerLinkActive="router-link-active">User-Type</a></li>
-          <li *ngIf="addmode" class="breadcrumb-item active" aria-current="page">ADD</li>
-          <li *ngIf="editmode" class="breadcrumb-item active" aria-current="page">EDIT</li>
-        </ol>
-    </nav>
-  </div>
-  
-  <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addUser-Type">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editUser-Type()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
-  </div>
-  
-  <div>
-    <h3>User-Type List</h3>
-  </div>
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/admin/user_tpye']" routerLinkActive="router-link-active">User Type</a></li>
+        <li *ngIf="addmode" class="breadcrumb-item active" aria-current="page">ADD</li>
+        <li *ngIf="editmode" class="breadcrumb-item active" aria-current="page">EDIT</li>
+      </ol>
+  </nav>
+</div>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+<div class="mt-1 d-flex justify-content-end">
+  <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addUserType"><i class="fas fa-plus"></i>New</button>
+  <button type="button" class="btn btn-info btn-sm mr-1" (click)="editUserType()"><i class="far fa-edit"></i>Edit</button>
+  <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"><i class="far fa-trash-alt"></i>Delete</button>
+</div>
 
-    </tbody>
-  </table>
+<div class="card mt-1">
+  <div style="padding: 10px;">
+    <div>
+      <h3>User Type List</h3>
+    </div>
+    <table class="table table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr style="text-align: center;">
+          <th scope="col">S.No</th>
+          <th scope="col">Generated Code</th>
+          <th scope="col">State Name</th>
+          <th scope="col">Delete Status</th>
+          <th scope="col">Edit</th>
+          <th scope="col">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+    
+      </tbody>
+    </table>
+  </div>
+</div>
 
-  <div class="modal fade" id="addUser-Type" tabindex="-1" aria-labelledby="addUser-TypeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addUser-TypeLabel">New User-Type Form</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="mt-1">
-                <form [formGroup]="User-TypeForm">
-                    <div class="form-row mt-2">
-                      <div class="form-group col-12">
-                        <label>User Type</label>
-                        <select formControlName="user-type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.user-type.errors }">
-                            <option value=""> !.....Select The user....1</option>
-                            <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Miss">Miss</option>
-                            <option value="Ms">Ms</option>
-                        </select>
-                        <div *ngIf="submitted && f.user-type.errors" class="invalid-feedback">
-                            <div *ngIf="f.user-type.errors.required">User-Type is required</div>
-                        </div>
-                    </div>
-                        
-                    </div>
-                </form>
+<div class="modal fade" id="addUserType" tabindex="-1" aria-labelledby="addUserTypeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserTypeLabel">New User Type Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <form [formGroup]="UserTypeForm">
+      <div class="modal-body">
+          <div class="mt-1">
+                  <div class="form-row mt-2">
+
+                      <div class="form-group col-6">
+                          <label for="exampleFormControlInput1">User Type Name</label>
+                          <input type="text" class="form-control" placeholder="Enter User Type Name" formControlName="user_type_name">
+                          <div *ngIf="UserTypeForm.controls['user_type_name'].touched && UserTypeForm.controls['user_type_name'].invalid" class="text-danger">
+                            <div *ngIf="UserTypeForm.controls['user_type_name'].errors && UserTypeForm.controls['user_type_name'].errors.required"> 
+                              User Type Name is required.
+                            </div>
+                          </div>
+                      </div>
+
+                  </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addUser-Type()" data-dismiss="modal">Add</button>
-                <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateUser-Type()" data-dismiss="modal">Update</button>
-                <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
+      </div>
+    </form>
+      <div class="modal-footer">
+          <div class="d-flex justify-content-end">
+              <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addUserType()">Add</button>
+              <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateUserType()" data-dismiss="modal">Update</button>
+              <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
+          </div>
       </div>
     </div>
   </div>
-  
-  <div class="modal fade" id="deleteUser-Type" tabindex="-1" aria-labelledby="deleteUser-TypeLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteUser-TypeLabel">Delete</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Do you really want to delete this User-Type ?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-danger" (click)="deleteUser-Type()" data-dismiss="modal">Yes</button>
-        </div>
+</div>
+
+<div class="modal fade" id="deleteUserType" tabindex="-1" aria-labelledby="deleteUserTypeLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteUserTypeLabel">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete this User Type ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" (click)="deleteUserType()" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
-  
+</div>
+

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { TrandingTypeService } from 'src/app/services/tranding-type.service';
+declare var $:any;
 
 @Component({
   selector: 'app-trading-type',
@@ -10,7 +11,27 @@ import { TrandingTypeService } from 'src/app/services/tranding-type.service';
   styleUrls: ['./trading-type.component.scss']
 })
 export class TradingTypeComponent implements OnInit {
+  
+ registerForm: FormGroup;
+ submitted = false;
 
+
+  Trading_typecolumnDefs = [
+    {headerName: 'UID', field: 'uid', width: 150, checkboxSelection: true,headerCheckboxSelection: true,sortable: true, filter: true},
+    {headerName: 'Logo', field: 'logo', width: 120,cellRenderer: function(params) {
+      return '<img style="height: 50px; width: auto;" src="'+params.value+'" alt="">';
+    }},
+    {headerName: 'Ecell', field: 'ecellname', resizable: true, sortable: true, filter: true},
+    {headerName: 'Ecell Email', field: 'ecellemail', resizable: true, sortable: true, filter: true},
+    {headerName: 'College Name', field: 'collegename', resizable: true, sortable: true, filter: true},
+    {headerName: 'Type', field: 'type', sortable: true, filter: true},
+    {headerName: 'Stream', field: 'stream', sortable: true, filter: true},
+    {headerName: 'District', field: 'district', sortable: true, filter: true},
+    {headerName: 'Trading_type', field: 'trading_type', sortable: true, filter: true},
+    {headerName: 'Address', field: 'address', resizable: true,sortable: true, filter: true},
+    {headerName: 'Status', field: 'status', sortable: true, filter: true},
+    {headerName: 'Created', field: 'created', sortable: true, filter: true}
+  ];
   TradingTypeForm: FormGroup;
   addmode: boolean;
   editmode: boolean;
@@ -28,6 +49,10 @@ export class TradingTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.registerForm = this.formBuilder.group({
+      title: ['', Validators.required],
+  });
     this.addmode = true;
     this.editmode = false;
     this.TradingTypeService.listTranding_Type().subscribe(data=>{
@@ -40,6 +65,30 @@ export class TradingTypeComponent implements OnInit {
       }
     });
   }
+  get f() { return this.registerForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    this.addTrading_type();
+}
+  addTrading_type() {
+    throw new Error('Method not implemented.');
+  }
+
+
+onReset() {
+  this.submitted = false;
+  this.registerForm.reset();
+}
+
 
 
   addTradingType(){
@@ -47,14 +96,20 @@ export class TradingTypeComponent implements OnInit {
       created:new Date(),
       status:'active'
     });
-    this.TradingTypeService.addTranding_Type(this.TradingTypeForm.value).subscribe(data=>{
-      if (data['success']) {
-        this.recall();
-        this.showSuccess(data['message']);
-      } else {
-        this.showError(data['message']);
-      }
-    });
+    if(this.TradingTypeForm.valid)
+    {
+      this.TradingTypeService.addTranding_Type(this.TradingTypeForm.value).subscribe(data=>{
+        if (data['success']) {
+          this.recall();
+          this.showSuccess(data['message']);
+        } else {
+          this.showError(data['message']);
+        }
+      });
+    }
+    else{
+      this.showError("Please Fill All Details")
+    }
   }
   editTranding_Type(){
     const selectedNodes = this.agGrid.api.getSelectedNodes();

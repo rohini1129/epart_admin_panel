@@ -10,38 +10,43 @@
   </div>
   
   <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addRole">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editRole()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addRole"><i class="fas fa-plus"></i>New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editRole()"><i class="far fa-edit"></i>Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"><i class="far fa-trash-alt"></i>Delete</button>
   </div>
   
-  <div>
-    <h3>Role List</h3>
+  <div class="card mt-1">
+    <div style="padding: 10px;">
+      <div>
+        <h3>Role List</h3>
+      </div>
+      
+      <table class="table table-bordered table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Generated Code</th>
+            <th scope="col">State Name</th>
+            <th scope="col">Delete Status</th>
+            <th scope="col">Edit</th>
+            <th scope="col">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+    
+        </tbody>
+      </table>
+    </div>
   </div>
-  
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-
-    </tbody>
-  </table>
+ 
 
 
   <div class="modal fade" id="addRole" tabindex="-1" aria-labelledby="addRoleLabel" aria-hidden="true">
@@ -53,85 +58,95 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <form [formGroup]="RoleForm" >
+          <div class="modal-body">
             <div class="mt-1">
-                <form [formGroup]="RoleForm">
-                    <div class="form-row mt-2">
-                        <div class="form-group col-6">
-                            <label for="exampleFormControlInput1">Role ID</label>
-                            <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" disabled>
+               <div class="form-row mt-2">
+                  <div class="form-group col-6">
+                      <label for="exampleFormControlInput1">Role ID</label>
+                      <input type="text" class="form-control" placeholder="Auto Generated" formControlName="id" [readonly]="editmode ? true : false" >
+                  </div>
+                  <div class="form-group col-6">
+                      <label>First Name</label>
+                      <input type="text" formControlName="addname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addname.errors }" />
+                      <div *ngIf="RoleForm.controls['role_name'].touched && RoleForm.controls['role_name'].invalid" class="text-danger">
+                        <div *ngIf="RoleForm.controls['role_name'].errors && RoleForm.controls['role_name'].errors.required"> 
+                          Role Name is required.
                         </div>
-                        <div class="form-group col-6">
-                          <label>First Name</label>
-                          <input type="text" formControlName="addname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addname.errors }" />
-                          <div *ngIf="submitted && f.addname.errors" class="invalid-feedback">
-                              <div *ngIf="f.addname.errors.required">First Name is required</div>
-                          </div>
                       </div>
-                      <div class="form-group col-6">
-                        <label>Status</label>
-                        <select formControlName="Select The Status" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
-                            <option value="">!...Select the Status...!</option>
-                            <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Miss">Miss</option>
-                            <option value="Ms">Ms</option>
-                        </select>
-                        <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
-                            <div *ngIf="f.status.errors.required">Status is required</div>
+                  </div>
+                  <div class="form-group col-6">
+                     <label>Status</label>
+                      <select formControlName="Select The Status" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                         <option value="">!...Select the Status...!</option>
+                         <option value="Mr">Mr</option>
+                         <option value="Mrs">Mrs</option>
+                         <option value="Miss">Miss</option>
+                         <option value="Ms">Ms</option>
+                      </select>
+                      <div *ngIf="RoleForm.controls['role_name'].touched && RoleForm.controls['role_name'].invalid" class="text-danger">
+                        <div *ngIf="RoleForm.controls['role_name'].errors && RoleForm.controls['role_name'].errors.required"> 
+                          Role Name is required.
                         </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-6">
+                    <label>Modules</label>
+                    <input type="text" formControlName="modules" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modules.errors }" />
+                    <div *ngIf="RoleForm.controls['role_name'].touched && RoleForm.controls['role_name'].invalid" class="text-danger">
+                      <div *ngIf="RoleForm.controls['role_name'].errors && RoleForm.controls['role_name'].errors.required"> 
+                        Role Name is required.
+                      </div>
                     </div>
-                    <div class="form-group col-6">
-                      <label>Modules</label>
-                      <input type="text" formControlName="modules" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modules.errors }" />
-                      <div *ngIf="submitted && f.modules.errors" class="invalid-feedback">
-                          <div *ngIf="f.modules.errors.required">Modules is required</div>
-                      </div>
                   </div>
                   <div class="form-group col-12">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="iv_locate">
-                        <label class="form-check-label" for="defaultCheck1">
-                            View
-                        </label>
-                      </div>
-                </div>
-                <div class="form-group col-6">
-                  <label>Add</label>
-                  <input type="text" formControlName="addname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addname.errors }" />
-                  <div *ngIf="submitted && f.addname.errors" class="invalid-feedback">
-                      <div *ngIf="f.addname.errors.required">Add Name is required</div>
-                  </div>
-              </div>
-              <div class="form-group col-6">
-                <label>Modify</label>
-                <select formControlName="Select The Status" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
-                    <option value="">!...Select the Status...!</option>
-                    <option value="Mr">Mr</option>
-                    <option value="Mrs">Mrs</option>
-                    <option value="Miss">Miss</option>
-                    <option value="Ms">Ms</option>
-                </select>
-                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
-                    <div *ngIf="f.status.errors.required">Status is required</div>
-                </div>
-              </div>
-              <div class="form-group col-12">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" >
-                    <label class="form-check-label" for="defaultCheck1">
-                        Delete
-                    </label>
-                  </div>
-            </div>
-
+                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" formControlName="iv_locate">
+                      <label class="form-check-label" for="defaultCheck1">
+                          View
+                      </label>
                     </div>
-                </form>
+                  </div>
+                  <div class="form-group col-6">
+                   <label>Add</label>
+                   <input type="text" formControlName="addname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addname.errors }" />
+                   <div *ngIf="RoleForm.controls['role_name'].touched && RoleForm.controls['role_name'].invalid" class="text-danger">
+                    <div *ngIf="RoleForm.controls['role_name'].errors && RoleForm.controls['role_name'].errors.required"> 
+                      Role Name is required.
+                    </div>
+                  </div>
+                  </div>
+                  <div class="form-group col-6">
+                     <label>Modify</label>
+                     <select formControlName="Select The Status" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                        <option value="">!...Select the Status...!</option>
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Ms">Ms</option>
+                     </select>
+                     <div *ngIf="RoleForm.controls['role_name'].touched && RoleForm.controls['role_name'].invalid" class="text-danger">
+                      <div *ngIf="RoleForm.controls['role_name'].errors && RoleForm.controls['role_name'].errors.required"> 
+                        Role Name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-12">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" >
+                      <label class="form-check-label" for="defaultCheck1">
+                        Delete
+                      </label>
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
+        </form>
+        
         <div class="modal-footer">
             <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addRole()" data-dismiss="modal">Add</button>
+              <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addRole()">Add</button>
                 <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updateRole()" data-dismiss="modal">Update</button>
                 <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
             </div>

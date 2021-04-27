@@ -6,6 +6,9 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root'
 })
 export class ProductTypeService {
+  listProduct_type() {
+    throw new Error('Method not implemented.');
+  }
  
   constructor(private http:HttpClient) { }
 

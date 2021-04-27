@@ -1,8 +1,10 @@
+
+
 <div class="mt-1">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</a></li>
-          <li class="breadcrumb-item"><a [routerLink]="['/admin/payout-schedule']" routerLinkActive="router-link-active">Payout-Schedule</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/admin/payout_schedule']" routerLinkActive="router-link-active">Payout-Schedule</a></li>
           <li *ngIf="addmode" class="breadcrumb-item active" aria-current="page">ADD</li>
           <li *ngIf="editmode" class="breadcrumb-item active" aria-current="page">EDIT</li>
         </ol>
@@ -10,72 +12,66 @@
   </div>
   
   <div class="mt-1 d-flex justify-content-end">
-    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addPayout-Schdule">New</button>
-    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editPayout-Schdule()">Edit</button>
-    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()">Delete</button>
+    <button type="button" class="btn btn-dark btn-sm mr-1" data-toggle="modal" data-target="#addPayout_Schdule"> <i class="fas fa-plus"></i>New</button>
+    <button type="button" class="btn btn-info btn-sm mr-1" (click)="editPayout_Schedule()"> <i class="far fa-edit"></i>Edit</button>
+    <button type="button" class="btn btn-danger btn-sm mr-1" (click)="Validate()"> <i class="far fa-trash-alt"></i>Delete</button>
   </div>
   
-  <div>
-    <h3>Payout-Schdule List</h3>
+  <div class="card mt-1">
+    <div style="padding: 10px;">
+      <div>
+        <h3>Payout-Schdule List</h3>
+      </div>
+      <table class="table table-bordered table-sm">
+        <thead  class="thead-dark">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Generated Code</th>
+            <th scope="col">Payment Name</th>
+            <th scope="col">Delete Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+    
+        </tbody>
+      </table>
+    </div>
   </div>
   
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">S.No</th>
-        <th scope="col">Generated Code</th>
-        <th scope="col">State Name</th>
-        <th scope="col">Delete Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-
-    </tbody>
-  </table>
 
 
-  <div class="modal fade" id="addPayout-Schdule" tabindex="-1" aria-labelledby="addPayout-SchduleLabel" aria-hidden="true">
+  <div class="modal fade" id="addPayout_Schdule" tabindex="-1" aria-labelledby="addPayout_SchduleLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addPayout-SchduleLabel">New Payout-Schdule Form</h5>
+          <h5 class="modal-title" id="addPayout_SchduleLabel">New Payout-Schdule Form</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-            <div class="mt-1">
-                <form [formGroup]="Payout-SchduleForm">
-                  <div class="form-group col-12">
-                    <label>Payout-Schdule</label>
-                    <select formControlName="payout-schedule-name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-                        <option value="">Select Product</option>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Miss">Miss</option>
-                        <option value="Ms">Ms</option>
-                    </select>
-                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-                        <div *ngIf="f.title.errors.required">Title is required</div>
-                    </div>
-                </div>
-                </form>
+        <form [formGroup]="Payout_ScheduleForm" >
+          <div class="form-group col-12">
+            <label for="exampleFormControlInput1">State Name</label>
+            <input type="text" class="form-control" placeholder="Enter Payment Name" formControlName="city_name">
+            <div *ngIf="Payout_ScheduleForm.controls['payout_schedule_name'].touched && Payout_ScheduleForm.controls['payout_schedule_name'].invalid" class="text-danger">
+              <div *ngIf="Payout_ScheduleForm.controls['payout_schedule_name'].errors && Payout_ScheduleForm.controls['payout_schedule_name'].errors.required"> 
+                Payout Schedule Name is required.
+              </div>
             </div>
         </div>
+        </form>
         <div class="modal-footer">
             <div class="d-flex justify-content-end">
-                <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addPayout-Schdule()" data-dismiss="modal">Add</button>
-                <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updatePayout-Schdule()" data-dismiss="modal">Update</button>
+              <button *ngIf="addmode" type="button" class="btn btn-success btn-sm mr-1" (click)="addPayout_Schedule()" data-dismiss="modal">Add</button>
+                <button *ngIf="editmode" type="button" class="btn btn-success btn-sm mr-1" (click)="updatePayout_Schedule()" data-dismiss="modal">Update</button>
                 <button class="btn btn-warning btn-sm" (click)="cancel()" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -83,11 +79,11 @@
     </div>
   </div>
   
-  <div class="modal fade" id="deletePayout-Schdule" tabindex="-1" aria-labelledby="deletePayout-SchduleLabel" aria-hidden="true">
+  <div class="modal fade" id="deletePayout_Schedule" tabindex="-1" aria-labelledby="deletePayout_ScheduleLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="deletePayout-SchduleLabel">Delete</h5>
+          <h5 class="modal-title" id="deletePayout_ScheduleLabel">Delete</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -97,7 +93,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-danger" (click)="deletePayout-Schdule()" data-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-danger" (click)="deletePayout_Schedule()" data-dismiss="modal">Yes</button>
         </div>
       </div>
     </div>

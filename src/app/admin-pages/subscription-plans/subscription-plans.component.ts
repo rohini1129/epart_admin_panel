@@ -4,6 +4,8 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { SubscriptionPlansService } from 'src/app/services/subscription-plans.service';
 declare var $:any;
+
+
 @Component({
   selector: 'app-subscription-plans',
   templateUrl: './subscription-plans.component.html',
@@ -12,6 +14,11 @@ declare var $:any;
 export class SubscriptionPlansComponent implements OnInit {
 
   @ViewChild('agGrid') agGrid: AgGridAngular;
+  
+ registerForm: FormGroup;
+ submitted = false;
+
+
   SubscriptionPlanscolumnDefs = [
     {headerName: 'UID', field: 'uid', width: 150, checkboxSelection: true,headerCheckboxSelection: true,sortable: true, filter: true},
     {headerName: 'Logo', field: 'logo', width: 120,cellRenderer: function(params) {
@@ -41,11 +48,17 @@ export class SubscriptionPlansComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private  Subscription_PlansService: SubscriptionPlansService,
               private toastr:ToastrManager) { 
     this. SubscriptionPlansForm = this.formBuilder.group({
-       Subscription_Plans_name:['', Validators.required]
+       id:['', Validators.required],
+       subscriptionplans_name:['', Validators.required],
+       status:['', Validators.required]
     });
   }
 
   ngOnInit(): void {
+    
+    this.registerForm = this.formBuilder.group({
+      title: ['', Validators.required],
+  });
     this.addmode = true;
     this.editmode = false;
     this. Subscription_PlansService.listSubscription_Plan().subscribe(data=>{
@@ -58,6 +71,27 @@ export class SubscriptionPlansComponent implements OnInit {
       }
     });
   }
+  get f() { return this.registerForm.controls; }
+
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    this.addSubscription_Plans();
+}
+
+
+onReset() {
+  this.submitted = false;
+  this.registerForm.reset();
+}
 
 
   addSubscription_Plans(){
@@ -83,7 +117,7 @@ export class SubscriptionPlansComponent implements OnInit {
       this.editmode = true;
       $('#add Subscription_Plans').modal('show');
       this.SubscriptionPlansForm.patchValue({
-         Subscription_Plans_name:selectedData[0]. Subscription_Plans_name
+         subscriptionplans_name:selectedData[0]. subscriptionplans_name
       });
     } else {
       this.showError("Select only One record");
@@ -92,7 +126,7 @@ export class SubscriptionPlansComponent implements OnInit {
   }
 
   updateSubscriptionPlans(){
-    this. Subscription_PlansService.updateSubscription_Plans(this. SubscriptionPlansForm.value).subscribe(data=>{
+    this.Subscription_PlansService.updateSubscription_Plans(this. SubscriptionPlansForm.value).subscribe(data=>{
       if (data['success']) {
         this.recall();
         this.showSuccess(data['message']);

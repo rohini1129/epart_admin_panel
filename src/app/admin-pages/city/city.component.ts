@@ -12,6 +12,11 @@ declare var $:any;
 })
 export class CityComponent implements OnInit {
   @ViewChild('agGrid') agGrid: AgGridAngular;
+
+  
+ registerForm: FormGroup;
+ submitted = false;
+
   CitycolumnDefs = [
     {headerName: 'UID', field: 'uid', width: 150, checkboxSelection: true,headerCheckboxSelection: true,sortable: true, filter: true},
     {headerName: 'Logo', field: 'logo', width: 120,cellRenderer: function(params) {
@@ -44,6 +49,11 @@ export class CityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+      title: ['', Validators.required],
+  });
+
+
     this.addmode = true;
     this.editmode = false;
     this.CityService.listCity().subscribe(data=>{
@@ -57,20 +67,47 @@ export class CityComponent implements OnInit {
     });
   }
 
+  get f() { return this.registerForm.controls; }
+  
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+    this.addCity();
+}
+
+
+onReset() {
+  this.submitted = false;
+  this.registerForm.reset();
+}
+
 
   addCity(){
     this.CityForm.patchValue({
       created:new Date(),
       status:'active'
     });
-    this.CityService.addCity(this.CityForm.value).subscribe(data=>{
-      if (data['success']) {
-        this.recall();
-        this.showSuccess(data['message']);
-      } else {
-        this.showError(data['message']);
-      }
-    });
+    if(this.CityForm.valid){
+      this.CityService.addCity(this.CityForm.value).subscribe(data=>{
+        if (data['success']) {
+          this.recall();
+          this.showSuccess(data['message']);
+        } else {
+          this.showError(data['message']);
+        }
+      });
+    }
+    else{
+      this.showError("Please Fill All Details");
+    }
   }
 
   editCity(){
